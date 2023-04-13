@@ -4,6 +4,7 @@ public class Projectile : MonoBehaviour
 {
     private Rigidbody2D _rigidbody2D;
     public float projectileSpeed;
+    private float _timer;
 
     private void Awake()
     {
@@ -13,5 +14,10 @@ public class Projectile : MonoBehaviour
     private void Update()
     {
         _rigidbody2D.velocity = Vector2.left * projectileSpeed;
+        _timer += Time.deltaTime;
+        if (_timer > 7f)
+        {
+            Destroy(gameObject);
+        }
     }
 }
