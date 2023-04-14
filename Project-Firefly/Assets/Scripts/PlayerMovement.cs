@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -6,10 +7,13 @@ public class PlayerMovement : MonoBehaviour
    private Rigidbody2D _rigidbody2D;
    private BoxCollider2D _boxCollider2D;
    [SerializeField] private LayerMask canJump;
+   [SerializeField] private LayerMask enemies;
    private float _timer;
    public float shootTime;
    private bool _isAttacking;
-   private bool _isBlocking;
+   public GameObject attackPoint;
+   public float attackRadius;
+   
 
    private Animator _animator;
    private static readonly int State = Animator.StringToHash("state");
@@ -45,6 +49,12 @@ public class PlayerMovement : MonoBehaviour
       _timer += Time.deltaTime;
       if (Input.GetKey(KeyCode.Mouse0) &&  _timer >= shootTime)
       {
+         Collider2D[] enemy = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRadius, enemies);
+         foreach (Collider2D enemyGameObject in enemy)
+         {
+            Destroy(enemyGameObject.gameObject);
+            Debug.Log("You hit an enemy");
+         }
          _isAttacking = true;
          _timer = 0;
          Debug.Log("attack");
@@ -54,7 +64,12 @@ public class PlayerMovement : MonoBehaviour
          _isAttacking = false;
       }
    }
-   
+
+   private void OnDrawGizmos()
+   {
+      Gizmos.DrawWireSphere(attackPoint.transform.position,attackRadius);
+   }
+
    private bool IsGrounded()
    {
       var bounds = _boxCollider2D.bounds;
