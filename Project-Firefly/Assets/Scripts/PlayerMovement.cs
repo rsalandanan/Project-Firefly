@@ -9,10 +9,12 @@ public class PlayerMovement : MonoBehaviour
    private float _timer;
    public float shootTime;
    private bool _isAttacking;
+   private bool _isBlocking;
 
    private Animator _animator;
    private static readonly int State = Animator.StringToHash("state");
    private enum CharacterState {Running,Jumping, Falling, Attacking}
+   
 
    private void Awake()
    {
@@ -31,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
    private void Jump()
    {
-      if (Input.GetKey(KeyCode.Mouse0) && IsGrounded())
+      if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
       {
          _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpForce);
       }
@@ -39,15 +41,20 @@ public class PlayerMovement : MonoBehaviour
 
    private void Attack()
    {
-      _isAttacking = false;
+      
       _timer += Time.deltaTime;
-      if (Input.GetKey(KeyCode.Mouse1) &&  _timer >= shootTime)
+      if (Input.GetKey(KeyCode.Mouse0) &&  _timer >= shootTime)
       {
          _isAttacking = true;
          _timer = 0;
+         Debug.Log("attack");
       }
-      
+      else
+      {
+         _isAttacking = false;
+      }
    }
+   
    private bool IsGrounded()
    {
       var bounds = _boxCollider2D.bounds;
