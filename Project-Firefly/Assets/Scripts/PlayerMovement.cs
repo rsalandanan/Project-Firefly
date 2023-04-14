@@ -11,13 +11,24 @@ public class PlayerMovement : MonoBehaviour
    private float _timer;
    public float shootTime;
 
+   private Animator _animator;
+   private static readonly int State = Animator.StringToHash("state");
+   private enum CharacterState {Running,Jumping, Falling}
+
    private void Awake()
    {
       _rigidbody2D = GetComponent<Rigidbody2D>();
       _boxCollider2D = GetComponent<BoxCollider2D>();
+      _animator = GetComponent<Animator>();
    }
 
    private void Update()
+   {
+      Movement();
+      CharacterAnimation();
+   }
+
+   private void Movement()
    {
       _timer += Time.deltaTime;
       if (Input.GetKey(KeyCode.Mouse0) && IsGrounded())
@@ -34,6 +45,24 @@ public class PlayerMovement : MonoBehaviour
    private bool IsGrounded()
    {
       var bounds = _boxCollider2D.bounds;
-      return Physics2D.BoxCast(bounds.center, bounds.size, 0f, Vector2.down, 1f, canJump);
+      return Physics2D.BoxCast(bounds.center, bounds.size, 0f, Vector2.down, 0.1f, canJump);
+   }
+
+   private void CharacterAnimation()
+   {
+      CharacterState state;
+      if (_rigidbody2D.velocity.y > .1f)
+      {
+         state = CharacterState.Jumping;
+      }
+      else if (_rigidbody2D.velocity.y < -.1f)
+      {
+         state = CharacterState.Falling;
+      }
+      else
+      {
+         state = CharacterState.Running;
+      }
+      _animator.SetInteger(State,(int)state);
    }
 }
