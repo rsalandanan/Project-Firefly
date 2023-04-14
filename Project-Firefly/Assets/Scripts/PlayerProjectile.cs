@@ -4,7 +4,7 @@ public class PlayerProjectile : MonoBehaviour
 {
     private Rigidbody2D _rigidbody2D;
     public float projectileSpeed;
-    private float _despawnTime = 6f;
+    private float _despawnTime = 4f;
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();

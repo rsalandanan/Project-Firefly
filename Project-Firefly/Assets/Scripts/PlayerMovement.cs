@@ -15,7 +15,6 @@ public class PlayerMovement : MonoBehaviour
    {
       _rigidbody2D = GetComponent<Rigidbody2D>();
       _boxCollider2D = GetComponent<BoxCollider2D>();
-    
    }
 
    private void Update()
@@ -23,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
       _timer += Time.deltaTime;
       if (Input.GetKey(KeyCode.Mouse0) && IsGrounded())
       {
-         _rigidbody2D.AddForce(Vector2.up *jumpForce);
+         _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpForce);
       }
 
       if (Input.GetKey(KeyCode.Mouse1) &&  _timer >= shootTime)
@@ -31,9 +30,7 @@ public class PlayerMovement : MonoBehaviour
          _timer = 0;
          Instantiate(projectilePrefab, projectileSpawn.transform.position, projectilePrefab.transform.rotation);
       }
-      
    }
-
    private bool IsGrounded()
    {
       var bounds = _boxCollider2D.bounds;
