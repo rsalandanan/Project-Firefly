@@ -9,10 +9,13 @@ public class GameManager : MonoBehaviour
     public float timeBeforeSpawn;
     public GameObject projectilePrefab;
     public TextMeshProUGUI distanceUI;
+    public TextMeshProUGUI scoreUI;
+    public int killCount;
     private float _distance;
 
     private void Update()
     {
+        scoreUI.text = "Score: " + killCount;
         _timer += Time.deltaTime;
         _distance += Time.deltaTime;
         if (_timer >= timeBeforeSpawn)

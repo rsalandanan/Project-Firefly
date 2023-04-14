@@ -406,6 +406,8 @@ MonoBehaviour:
   timeBeforeSpawn: 3
   projectilePrefab: {fileID: 1938367843789389515, guid: 68ac198c7e50ec040a8677d694f173d0, type: 3}
   distanceUI: {fileID: 1199899721}
+  scoreUI: {fileID: 1713762638}
+  killCount: 0
 --- !u!4 &649602561
 Transform:
   m_ObjectHideFlags: 0
@@ -512,6 +514,7 @@ MonoBehaviour:
   shootTime: 1
   attackPoint: {fileID: 440982634}
   attackRadius: 1.34
+  gameManager: {fileID: 649602560}
 --- !u!61 &1027267346
 BoxCollider2D:
   m_ObjectHideFlags: 0

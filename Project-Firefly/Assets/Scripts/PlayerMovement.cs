@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
    private Animator _animator;
    private static readonly int State = Animator.StringToHash("state");
    private enum CharacterState {Running,Jumping, Falling, Attacking}
+
+   public GameManager gameManager;
    
 
    private void Awake()
@@ -53,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
          foreach (Collider2D enemyGameObject in enemy)
          {
             Destroy(enemyGameObject.gameObject);
+            gameManager.killCount += 1;
             Debug.Log("You hit an enemy");
          }
          _isAttacking = true;
