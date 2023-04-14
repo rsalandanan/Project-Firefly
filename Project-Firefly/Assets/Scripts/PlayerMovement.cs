@@ -6,10 +6,9 @@ public class PlayerMovement : MonoBehaviour
    private Rigidbody2D _rigidbody2D;
    private BoxCollider2D _boxCollider2D;
    [SerializeField] private LayerMask canJump;
-   public GameObject projectilePrefab;
-   public Transform projectileSpawn;
    private float _timer;
    public float shootTime;
+   private bool _isAttacking;
 
    private Animator _animator;
    private static readonly int State = Animator.StringToHash("state");
@@ -39,12 +38,13 @@ public class PlayerMovement : MonoBehaviour
    }
 
    private void Attack()
-   { 
+   {
+      _isAttacking = false;
       _timer += Time.deltaTime;
       if (Input.GetKey(KeyCode.Mouse1) &&  _timer >= shootTime)
       {
+         _isAttacking = true;
          _timer = 0;
-         Instantiate(projectilePrefab, projectileSpawn.transform.position, projectilePrefab.transform.rotation);
       }
       
    }
@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
       {
          state = CharacterState.Falling;
       }
-      else if (Input.GetMouseButtonDown(1))
+      else if (_isAttacking)
       {
          state = CharacterState.Attacking;
       }
