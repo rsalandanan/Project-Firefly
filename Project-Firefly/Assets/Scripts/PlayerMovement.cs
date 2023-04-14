@@ -13,10 +13,11 @@ public class PlayerMovement : MonoBehaviour
 
    private Animator _animator;
    private static readonly int State = Animator.StringToHash("state");
-   private enum CharacterState {Running,Jumping, Falling}
+   private enum CharacterState {Running,Jumping, Falling, Attacking}
 
    private void Awake()
    {
+      Cursor.visible = false;
       _rigidbody2D = GetComponent<Rigidbody2D>();
       _boxCollider2D = GetComponent<BoxCollider2D>();
       _animator = GetComponent<Animator>();
@@ -24,23 +25,28 @@ public class PlayerMovement : MonoBehaviour
 
    private void Update()
    {
-      Movement();
+      Jump();
+      Attack();
       CharacterAnimation();
    }
 
-   private void Movement()
+   private void Jump()
    {
-      _timer += Time.deltaTime;
       if (Input.GetKey(KeyCode.Mouse0) && IsGrounded())
       {
          _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpForce);
       }
+   }
 
+   private void Attack()
+   { 
+      _timer += Time.deltaTime;
       if (Input.GetKey(KeyCode.Mouse1) &&  _timer >= shootTime)
       {
          _timer = 0;
          Instantiate(projectilePrefab, projectileSpawn.transform.position, projectilePrefab.transform.rotation);
       }
+      
    }
    private bool IsGrounded()
    {
@@ -58,6 +64,10 @@ public class PlayerMovement : MonoBehaviour
       else if (_rigidbody2D.velocity.y < -.1f)
       {
          state = CharacterState.Falling;
+      }
+      else if (Input.GetMouseButtonDown(1))
+      {
+         state = CharacterState.Attacking;
       }
       else
       {
