@@ -54,13 +54,11 @@ public class PlayerMovement : MonoBehaviour
          Collider2D[] enemy = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRadius, enemies);
          foreach (Collider2D enemyGameObject in enemy)
          {
-            Destroy(enemyGameObject.gameObject);
+            Destroy(enemyGameObject.gameObject, 0.1f);
             gameManager.killCount += 1;
-            Debug.Log("You hit an enemy");
          }
          _isAttacking = true;
          _timer = 0;
-         Debug.Log("attack");
       }
       else
       {
