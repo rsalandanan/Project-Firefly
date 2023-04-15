@@ -102,7 +102,7 @@ public class PlayerScript : MonoBehaviour
       {
          state = CharacterState.Jumping;
       }
-      else if (_rigidbody2D.velocity.y < -.1f)
+      else if (_rigidbody2D.velocity.y < -.1f && !_isAttacking)
       {
          state = CharacterState.Falling;
       }
