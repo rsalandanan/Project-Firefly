@@ -19,11 +19,12 @@ public class PlayerScript : MonoBehaviour
    private int _hpPoint = 3;
    public TextMeshProUGUI hpUI;
    private bool _gotHit;
+   private bool _isDead;
    
 
    private Animator _animator;
    private static readonly int State = Animator.StringToHash("state");
-   private enum CharacterState {Running,Jumping, Falling, Attacking,GettingHit}
+   private enum CharacterState {Running,Jumping, Falling, Attacking,GettingHit,Dead}
 
    public GameManager gameManager;
    
@@ -46,7 +47,7 @@ public class PlayerScript : MonoBehaviour
 
    private void Jump()
    {
-      if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+      if (Input.GetKeyDown(KeyCode.Space) && IsGrounded() && !_isDead)
       {
          _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpForce);
       }
@@ -55,7 +56,7 @@ public class PlayerScript : MonoBehaviour
    private void Attack()
    {
       _timer += Time.deltaTime;
-      if (Input.GetKey(KeyCode.Mouse0) &&  _timer >= shootTime)
+      if (Input.GetKey(KeyCode.Mouse0) &&  _timer >= shootTime && !_isDead)
       {
          Debug.Log("Attack!");
          _timer = 0;
@@ -79,9 +80,18 @@ public class PlayerScript : MonoBehaviour
       {
          _hpPoint--;
          hpUI.text = "HP: " + _hpPoint;
-         _gotHit = true;
-         yield return new WaitForSeconds(0.1f);
-         _gotHit = false;
+         if (_hpPoint == 0)
+         {
+            _isDead = true;
+            yield return new WaitForSeconds(0.1f);
+            
+         }
+         else
+         {
+            _gotHit = true;
+            yield return new WaitForSeconds(0.1f);
+            _gotHit = false;
+         }
       }
    }
 
@@ -98,11 +108,11 @@ public class PlayerScript : MonoBehaviour
    private void CharacterAnimation()
    {
       CharacterState state;
-      if (_rigidbody2D.velocity.y > .1f && !_isAttacking)
+      if (_rigidbody2D.velocity.y > .1f && !_isAttacking &&!_gotHit &&!_isDead)
       {
          state = CharacterState.Jumping;
       }
-      else if (_rigidbody2D.velocity.y < -.1f && !_isAttacking)
+      else if (_rigidbody2D.velocity.y < -.1f && !_isAttacking &&!_gotHit &&!_isDead)
       {
          state = CharacterState.Falling;
       }
@@ -113,6 +123,10 @@ public class PlayerScript : MonoBehaviour
       else if (_gotHit)
       {
          state = CharacterState.GettingHit;
+      }
+      else if ((_isDead))
+      {
+         state = CharacterState.Dead;
       }
       else
       {
