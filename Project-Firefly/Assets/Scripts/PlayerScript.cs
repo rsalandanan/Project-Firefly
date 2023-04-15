@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -58,14 +57,15 @@ public class PlayerScript : MonoBehaviour
       _timer += Time.deltaTime;
       if (Input.GetKey(KeyCode.Mouse0) &&  _timer >= shootTime)
       {
+         Debug.Log("Attack!");
+         _timer = 0;
+         _isAttacking = true;
          Collider2D[] enemy = Physics2D.OverlapCircleAll(attackPoint.transform.position, attackRadius, enemies);
          foreach (Collider2D enemyGameObject in enemy)
          {
             Destroy(enemyGameObject.gameObject, 0.1f);
             gameManager.killCount += 1;
          }
-         _isAttacking = true;
-         _timer = 0;
       }
       else
       {
@@ -98,7 +98,7 @@ public class PlayerScript : MonoBehaviour
    private void CharacterAnimation()
    {
       CharacterState state;
-      if (_rigidbody2D.velocity.y > .1f)
+      if (_rigidbody2D.velocity.y > .1f && !_isAttacking)
       {
          state = CharacterState.Jumping;
       }
