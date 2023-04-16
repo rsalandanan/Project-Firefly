@@ -43,6 +43,7 @@ public class PlayerScript : MonoBehaviour
       Jump();
       Attack();
       CharacterAnimation();
+      hpUI.text = "HP: " + hpPoint;
    }
 
    private void Jump()
@@ -79,7 +80,6 @@ public class PlayerScript : MonoBehaviour
       if (col.gameObject.CompareTag("EnemyProjectile"))
       {
          hpPoint--;
-         hpUI.text = "HP: " + hpPoint;
          if (hpPoint == 0)
          {
             _isDead = true;
