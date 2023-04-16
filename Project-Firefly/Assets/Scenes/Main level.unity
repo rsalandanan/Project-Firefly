@@ -570,8 +570,10 @@ MonoBehaviour:
   - {fileID: 1875872209}
   - {fileID: 808587869}
   - {fileID: 2080366698}
+  projectiles:
+  - {fileID: 1938367843789389515, guid: 68ac198c7e50ec040a8677d694f173d0, type: 3}
+  - {fileID: 4106279220816870278, guid: 94cc09847854c0b4d9f1c034f0b280cf, type: 3}
   timeBeforeSpawn: 3
-  projectilePrefab: {fileID: 1938367843789389515, guid: 68ac198c7e50ec040a8677d694f173d0, type: 3}
   distanceUI: {fileID: 1199899721}
   scoreUI: {fileID: 1713762638}
   killCount: 0
@@ -1439,7 +1441,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1875872209}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.03, y: -2.76, z: 0}
+  m_LocalPosition: {x: 5.03, y: -2.55, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
