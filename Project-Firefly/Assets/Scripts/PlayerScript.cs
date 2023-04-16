@@ -93,6 +93,13 @@ public class PlayerScript : MonoBehaviour
             _gotHit = false;
          }
       }
+
+      // if (col.gameObject.CompareTag("Potion"))
+      // {
+
+      //  _hpPoint++;
+      // Destroy(col.gameObject, 0.1f);
+      // }
    }
 
    private void OnDrawGizmos()

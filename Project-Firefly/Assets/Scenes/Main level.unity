@@ -573,7 +573,9 @@ MonoBehaviour:
   projectiles:
   - {fileID: 1938367843789389515, guid: 68ac198c7e50ec040a8677d694f173d0, type: 3}
   - {fileID: 4106279220816870278, guid: 94cc09847854c0b4d9f1c034f0b280cf, type: 3}
+  potion: {fileID: 0}
   timeBeforeSpawn: 3
+  timeBeforePotionSpawn: 10
   distanceUI: {fileID: 1199899721}
   scoreUI: {fileID: 1713762638}
   killCount: 0
