@@ -1,6 +1,8 @@
+using System.Collections;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -20,10 +22,14 @@ public class GameManager : MonoBehaviour
     private float _distance;
     private int _ranNum;
 
+    public PlayerScript playerScript;
+    public GameObject respawnPanel;
+
     private void Update()
     {
         EnemyAttack();
         PotionDrop();
+        Respawn();
         scoreUI.text = "Score: " + killCount;
         _distance += Time.deltaTime;
         distanceUI.text = "Distance: " + _distance.ToString("F2");
@@ -50,5 +56,29 @@ public class GameManager : MonoBehaviour
             _timerForPotion = 0;
             Instantiate(potion, spawnPoints[_ranNum].transform.position, quaternion.identity);
         }
+    }
+
+    private void Respawn()
+    {
+        if (playerScript.hpPoint == 0)
+        {
+            StartCoroutine(RespawnPanel());
+        }
+    }
+
+    IEnumerator RespawnPanel()
+    {
+        yield return new WaitForSeconds(1f);
+        respawnPanel.SetActive(true);
+    }
+
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene("Main level");
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
     }
 }

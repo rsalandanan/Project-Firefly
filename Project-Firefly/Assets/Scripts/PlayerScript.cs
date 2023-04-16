@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
+
 public class PlayerScript : MonoBehaviour
 {
    public float jumpForce;
@@ -15,8 +16,8 @@ public class PlayerScript : MonoBehaviour
    private bool _isAttacking;
    public GameObject attackPoint;
    public float attackRadius;
-
-   private int _hpPoint = 3;
+   
+   public int hpPoint = 3;
    public TextMeshProUGUI hpUI;
    private bool _gotHit;
    private bool _isDead;
@@ -31,11 +32,10 @@ public class PlayerScript : MonoBehaviour
 
    private void Awake()
    {
-      Cursor.visible = false;
       _rigidbody2D = GetComponent<Rigidbody2D>();
       _boxCollider2D = GetComponent<BoxCollider2D>();
       _animator = GetComponent<Animator>();
-      hpUI.text = "HEALTH: " + _hpPoint;
+      hpUI.text = "HEALTH: " + hpPoint;
    }
 
    private void Update()
@@ -78,9 +78,9 @@ public class PlayerScript : MonoBehaviour
    {
       if (col.gameObject.CompareTag("EnemyProjectile"))
       {
-         _hpPoint--;
-         hpUI.text = "HP: " + _hpPoint;
-         if (_hpPoint == 0)
+         hpPoint--;
+         hpUI.text = "HP: " + hpPoint;
+         if (hpPoint == 0)
          {
             _isDead = true;
             yield return new WaitForSeconds(0.1f);
@@ -94,12 +94,10 @@ public class PlayerScript : MonoBehaviour
          }
       }
 
-      // if (col.gameObject.CompareTag("Potion"))
-      // {
-
-      //  _hpPoint++;
-      // Destroy(col.gameObject, 0.1f);
-      // }
+      if (col.gameObject.CompareTag("Potion"))
+      {
+         hpPoint++;
+      }
    }
 
    private void OnDrawGizmos()
